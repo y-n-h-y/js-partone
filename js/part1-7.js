@@ -164,4 +164,21 @@ const 関数名 = () => {
 }
 ・関数の仮引数が1つのときは()を省略できる
 ・関数の処理が1つの式である場合に、ブロックとreturn文を省略できる
-*/
+const fnA = () => {仮引数がないとき}
+const fnB = x => {仮引数が一つの時は()を省略できる}
+const fnC = (x, y) => {仮引数が複数の時}
+
+const mulA = x => { return x * x; };//ブロックの中でreturn
+const mulB = x => x * x;//1行のみの場合はreturnとブロックを省略できる
+
+const array = [1, 2, 3];
+const doubleArray = array.map(function (value) {
+  return value * 2;
+});
+console.log(doubleArray);
+
+//functionとブロックを省略できる
+const array = [1, 2, 3];
+const doubleArray = array.map(value => value * 3);
+console.log(doubleArray);
+ */
