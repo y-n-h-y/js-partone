@@ -104,3 +104,8 @@ console.log(str.substring(-1));//
 console.log(str.substring(1, 4));//
 console.log(str.substring(4, 1));//
  */
+//indexOfメソッドとsliceメソッドの組み合わせ
+const url = "https//www.example.com?param1";
+const indecOfUrl = url.indexOf("?");
+const queryString = url.slice(indecOfUrl);
+console.log(queryString);
