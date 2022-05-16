@@ -170,3 +170,201 @@ const pattern = /a+/;
 const searchPattern = /\d{3}/;
 console.log(str.search(searchPattern));
  */
+
+//マッチした文字列の取得
+/* // まずは、マッチした文字列を取得するStringのmatchメソッドから見ていきます。 matchメソッドは、正規表現の/パターン/が"文字列"にマッチすると、マッチした文字列に関する情報を返すメソッドです。
+"文字列".match(/パターン/);
+console.log("文字列".match(/マッチしないパターン/));
+ */
+///[a-zA-Z]+/という正規表現はaからZのどれかの文字が1つ以上連続しているものにマッチします。
+/* const str = "ABC あいう DE えお";
+const alphabetsPattern = /[a-zA-Z]+/;
+const results = str.match(alphabetsPattern);
+console.log(results.length);
+console.log(results[0]);
+console.log(results.index);
+// 検索対象となった文字列全体
+console.log(results.input);
+ */
+// matchメソッドは正規表現のgフラグありのパターンで検索した場合、マッチしたすべての文字列を含んだ配列を返します。
+/* const str = "ABC あいう DE えお";
+const alphabetsPattern = /[a-zA-Z]+/g;
+const results = str.match(alphabetsPattern);
+console.log(results.length);
+console.log(results[0]);
+console.log(results[1]);
+//追加されない↓
+console.log(results.index);
+console.log(results.input);
+ */
+//matchAllメソッドでアルファベットにマッチする結果のIteratorオブジェクトを取得しています。 
+/* const str = "ABC あいう DE えお";
+const alphabetsPattern = /[a-zA-Z]+/g;
+// matchAllはIteratorを返す
+const matchesIterator = str.matchAll(alphabetsPattern);
+for (const match of matchesIterator) {
+  // マッチした要素ごとの情報を含んでいる
+  console.log(`match:${match[0]}, index:${match.index}, input:${match.input}`);
+}
+*/
+
+  //マッチした文字列の一部を取得
+/* const [マッチした全体の文字列, キャプチャ1, キャプチャ2] = 文字列.match(/パターン(キャプチャ1)と(キャプチャ2)/);
+ */
+/* const pattern = /ECMAScript (\d+)/;
+// 返り値は0番目がマッチした全体、1番目がキャプチャの1番目というように対応している
+const [all, capture1] = "ECMAScript 6".match(pattern);
+console.log(all);
+console.log(capture1);
+ */
+
+// "ES(数字+)"にマッチするが、欲しい文字列は数字の部分のみ
+/* const pattern = /ES(\d+)/g;
+const matchesIterator = "ES2015,ES2016,ES2017".matchAll(pattern);
+for (const match of matchesIterator) {
+  console.log(`match:"${match[0]}", capture1:${match[1]}, index:${match.index}, input:${match.input}`);
+}
+ */
+
+//RegExp.prototype.execでのString.prototype.matchAll
+/* RegExpのexecメソッドは、引数に文字列を受け取るメソッドです。
+/pattern/.exec("文字列");
+ */
+/* const str = "ABC あいう DE えお";
+const alphabetsPattern = /[a-zA-Z]+/;
+// gフラグなしでは、最初の結果のみを持つ配列を返す
+const results = alphabetsPattern.exec(str);
+console.log(results.length); // => 1
+console.log(results[0]); // => "ABC"
+// マッチした文字列の先頭のインデックス
+console.log(results.index); // => 0
+// 検索対象となった文字列全体
+console.log(results.input); // => "ABC あいう DE えお"
+ */
+/* const str = "ABC あいう DE えお";
+const alphabetsPattern = /[a-zA-Z]+/g;
+// まだ一度も検索していないので、lastIndexは0となり先頭から検索が開始される
+console.log(alphabetsPattern.lastIndex); // => 0
+// gフラグありでも、一回目の結果は同じだが、`lastIndex`プロパティが更新される
+const result1 = alphabetsPattern.exec(str);
+console.log(result1[0]); // => "ABC"
+console.log(alphabetsPattern.lastIndex); // => 3
+// 2回目の検索が、`lastIndex`の値のインデックスから開始される
+const result2 = alphabetsPattern.exec(str);
+console.log(result2[0]); // => "DE"
+console.log(alphabetsPattern.lastIndex); // => 10
+// 検索結果が見つからない場合はnullを返し、`lastIndex`プロパティは0にリセットされる
+const result3 = alphabetsPattern.exec(str);
+console.log(result3); // => null
+console.log(alphabetsPattern.lastIndex); // => 0
+ */
+/* const str = "ABC あいう DE えお";
+const alphabetsPattern = /[a-zA-Z]+/g;
+let matches;
+while (matches = alphabetsPattern.exec(str)) {
+    // RegExpの`exec`メソッドの返り値は`index`プロパティなどを含む特殊な配列
+    console.log(`match: ${matches[0]}, index: ${matches.index}, lastIndex: ${alphabetsPattern.lastIndex}`);
+}
+ */
+//真偽値を取得
+/*
+・StringのstartsWith相当: /^パターン/.test(文字列)
+・StringのendsWith相当: /パターン$/.test(文字列)
+・Stringのincludes相当: /パターン/.test(文字列)
+ */
+/* // 検索対象となる文字列
+const str = "にわにはにわにわとりがいる";
+// ^ - 検索文字列が先頭ならtrue
+console.log(/^にわ/.test(str)); // => true
+console.log(/^いる/.test(str)); // => false
+// $ - 検索文字列が末尾ならtrue
+console.log(/にわ$/.test(str)); // => false
+console.log(/いる$/.test(str)); // => true
+// 検索文字列が含まれるならtrue
+console.log(/にわ/.test(str)); // => true
+console.log(/いる/.test(str)); // => true
+ */
+
+// 文字列の置換/削除
+// 文字列の一部を置換したり削除するにはStringのreplaceメソッドを利用します。
+/*
+文字列.replace("検索文字列", "置換文字列");
+文字列.replace(/パターン/, "置換文字列");
+*/
+/* const str = "文字列";
+// "文字"を""（空文字列）へ置換することで"削除"を表現
+const newStr = str.replace("文字", "");
+console.log(newStr);
+ */
+/* // 検索対象となる文字列
+const str = "にわにはにわにわとりがいる";
+// 文字列を指定した場合は、最初に一致したものだけが置換される
+console.log(str.replace("にわ", "niwa")); // => "niwaにはにわにわとりがいる"
+// `g`フラグなし正規表現の場合は、最初に一致したものだけが置換される
+console.log(str.replace(/にわ/, "niwa")); // => "niwaにはにわにわとりがいる"
+// `g`フラグあり正規表現の場合は、繰り返し置換を行う
+console.log(str.replace(/にわ/g, "niwa")); // => "niwaにはniwaniwaとりがいる"
+ */
+// 文字列から検索文字列にマッチするものをすべて置換する場合には、ES2021で追加されたStringのreplaceAllメソッドも利用できます。 
+// 検索対象となる文字列
+/* const str = "???";
+// replaceメソッドに文字列を指定した場合は、最初に一致したものだけが置換される
+console.log(str.replace("?", "!")); // => "!??"
+// replaceAllメソッドに文字列を指定した場合は、一致したものがすべて置換される
+console.log(str.replaceAll("?", "!")); // => "!!!"
+// replaceメソッドの場合は、正規表現の特殊文字はエスケープが必要となる
+console.log(str.replace(/\?/g, "!")); // => "!!!"
+// replaceAllメソッドにも正規表現を渡せるが、この場合はエスケープが必要となるためreplaceと同じ
+console.log(str.replaceAll(/\?/g, "!")); // => "!!!"
+ */
+// replaceメソッドとreplaceAllメソッドでは、キャプチャした文字列を利用して複雑な置換処理もできます。
+/*
+const 置換した結果の文字列 = 文字列.replace(/(パターン)/, (all, ...captures) => {
+    return 置換したい文字列;
+});
+ */
+/* function toDateJa(dateString) {
+  // パターンにマッチしたときのみ、コールバック関数で置換処理が行われる
+  return dateString.replace(/(\d{4})-(\d{2})-(\d{2})/g, (all, year, month, day) => {
+      // `all`には、マッチした文字列全体が入っているが今回は利用しない
+      // `all`が次の返す値で置換されるイメージ
+      return `${year}年${month}月${day}日`;
+  });
+}
+// マッチしない文字列の場合は、そのままの文字列が返る
+console.log(toDateJa("本日ハ晴天ナリ")); // => "本日ハ晴天ナリ"
+// マッチした場合は置換した結果を返す
+console.log(toDateJa("今日は2017-03-01です")); // => "今日は2017年03月01日です"
+ */
+// タグつきテンプレート関数
+// JavaScriptでは、テンプレートとなる文字列に対して一部分だけを変更する処理を行う方法として、タグつきテンプレート関数があります。 タグつきテンプレート関数とは、関数`テンプレート` という形式で記述する関数とテンプレートリテラルを合わせた表現です。 
+/* function tag(str) {
+  // 引数`str`にはただの文字列が渡ってくる
+  console.log(str);
+}
+tag(`template ${0}, ${1}`);
+ */
+/*
+// 呼び出し方によって受け取る引数の形式が変わる
+function tag(strings, ...values) {
+  // stringsは文字列のパーツが${}で区切られた配列となる
+  console.log(strings); // => ["template "," literal ",""]
+  // valuesには${}の評価値が順番に入る
+  console.log(values); // => [0, 1]
+}
+// ()をつけずにテンプレートを呼び出す
+tag`template ${0} literal ${1}`;
+ */
+// 次のコードでは、テンプレート中の変数をURLエスケープしてから埋め込むタグつきテンプレート関数を定義しています。 encodeURIComponent関数は引数の値をURLエスケープする関数です。
+/* // 変数をURLエスケープするタグ関数
+function escapeURL(strings, ...values) {
+  return strings.reduce((result, str, i) => {
+      return result + encodeURIComponent(values[i - 1]) + str;
+  });
+}
+
+const input = "A&B";
+// escapeURLタグ関数を使ったタグつきテンプレート
+const escapedURL = escapeURL`https://example.com/search?q=${input}&sort=desc`;
+console.log(escapedURL);
+ */
