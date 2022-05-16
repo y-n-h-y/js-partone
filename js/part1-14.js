@@ -105,7 +105,67 @@ console.log(str.substring(1, 4));//
 console.log(str.substring(4, 1));//
  */
 //indexOfメソッドとsliceメソッドの組み合わせ
-const url = "https//www.example.com?param1";
+/* const url = "https//www.example.com?param1";
 const indecOfUrl = url.indexOf("?");
 const queryString = url.slice(indecOfUrl);
 console.log(queryString);
+ */
+//文字列の検索
+// 文字列の検索方法として、大きく分けて文字列による検索と正規表現による検索があります。
+/* 
+・マッチした箇所のインデックスを取得
+・マッチした文字列の取得
+・マッチしたかどうかの真偽値を取得
+ */
+//文字列によるインデックスの取得
+// StringのindexOfメソッドとlastIndexOfメソッドは、指定した文字列で検索し、その文字列が最初に現れたインデックスを返します。 
+/* 
+・文字列.indexOf("検索文字列"): 先頭から検索し、指定された文字列が最初に現れたインデックスを返す
+・文字列.lastIndexOf("検索文字列"): 末尾から検索し、指定された文字列が最初に現れたインデックスを返す
+ */
+/* const str = "にわにわにわにわとりがいる";
+// "にわ"の先頭のインデックスを返すため 0 となる
+console.log(str.indexOf("にわ"));
+// lastIndexOfは末尾から検索しインデックスを返す- "にわにはにわ**にわ**とりがいる"
+console.log(str.lastIndexOf("にわ"));
+// 指定した文字列が見つからない場合は -1 を返す
+console.log(str.indexOf("未知のキーワード")); // => -1
+ */
+//文字列にマッチした文字列の取得
+/* const str =  "JavaScript";
+const serch = "Script";
+const index = str.indexOf(serch);
+if (index !== -1) {
+  console.log(`${serch}が見つかりました`);
+} else {
+  console.log(`${searchWord}は見つかりませんでした`);
+}
+ */
+//真偽値の取得
+/* 
+・String.prototype.startsWith(検索文字列)[ES2015]: 検索文字列が先頭にあるかの真偽値を返す
+・String.prototype.endsWith(検索文字列)[ES2015]: 検索文字列が末尾にあるかの真偽値を返す
+・String.prototype.includes(検索文字列)[ES2015]: 検索文字列を含むかの真偽値を返す
+ */
+/* const str = "にわにわにわにわとりがいる";
+console.log(str.startsWith("にわ"));
+console.log(str.startsWith("いる"));
+console.log(str.endsWith("にわ"));
+console.log(str.endsWith("いる"));
+console.log(str.includes("にわ"));
+console.log(str.includes("いる"));
+ */
+//正規表現オブジェクト
+// 文字列による検索では、固定の文字列にマッチするものしか検索できません。 一方で正規表現による検索では、あるパターン（規則性）にマッチするという柔軟な検索ができます。次の文字は特殊文字と呼ばれ、特別な意味を持ちます。特殊文字として解釈されないように入力する場合には\（バックスラッシュ）でエスケープする必要があります。
+//\ ^ $ . * + ? ( ) [ ] { } |
+/* const patternA = /パターン/フラグ;
+// `RegExp`コンストラクタで正規表現オブジェクトを作成
+const patternB = new RegExp("パターン文字列","フラグ");
+正規表現リテラルは、/と/のリテラル内に正規表現のパターンを書くことで、正規表現オブジェクトを作成できます。
+次のコードでは、+という1回以上の繰り返しを意味する特殊文字を使い、aが1回以上連続する文字列にマッチする正規表現オブジェクトを作成しています。
+const pattern = /a+/;
+ */
+// 次のコードでは、数字が3つ連続しているかを検索し、該当した箇所のインデックスを返しています。 \dは、1文字の数字（0から9）にマッチする特殊文字です。
+const str = "ABC123EFG";
+const searchPattern = /\d{3}/;
+console.log(str.search(searchPattern));
