@@ -146,7 +146,7 @@ console.log(array.join(", "));
 ・現在要素数より小さな要素数が指定された場合、その要素数を変更し、配列の末尾の要素を削除する
 ・現在要素数より大きな要素数が指定された場合、その要素数だけを変更し、配列の実際の要素はそのままにする
 */
-class ArrayLike {
+/* class ArrayLike {
   constructor(items = []) {
     this._item = items;
   }
@@ -166,7 +166,7 @@ class ArrayLike {
       this._items = this.items.concat(new Array(newLength - currentItemLength));
     }
   }
-}
+} */
 /* 
 const arrayLike = new ArrayLike([1, 2, 3, 4, 5]);
 // 要素数を減らすとインデックス以降の要素が削除される
@@ -189,4 +189,27 @@ const counter = new Counter();
 counter.increment();
 console.log(counter.count);
  */
+// クラスフィールドで定義するのは、クラスのインスタンスが持つプロパティです。 そのため、constructorメソッドの中でthis.count = 0のように定義した場合と結果的にはほとんど同じ意味となります。 
+/* class Myclass {
+  publickField = 1;
+  constructor(arg) {
+    this.property = arg;
+  }
+}
+const myClass = new Myclass(2);
+console.log(myClass.publickField);
+console.log(myClass.property); 
+ */
+// クラスフィールドを使ってプロパティの存在を宣言する
+class Myclass {
+  //undeifinedで初期化
+  propety;
+}
+
+class Loader {
+  loadedContent;
+  load() {
+    this.loadedContent = "読み込んだコンテンツ内容";
+  }
+}
 
