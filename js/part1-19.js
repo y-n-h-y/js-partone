@@ -200,7 +200,7 @@ const myClass = new Myclass(2);
 console.log(myClass.publickField);
 console.log(myClass.property); 
  */
-// クラスフィールドを使ってプロパティの存在を宣言する
+/* // クラスフィールドを使ってプロパティの存在を宣言する
 class Myclass {
   //undeifinedで初期化
   propety;
@@ -212,4 +212,4 @@ class Loader {
     this.loadedContent = "読み込んだコンテンツ内容";
   }
 }
-
+ */
